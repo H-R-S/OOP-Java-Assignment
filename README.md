@@ -1,13 +1,6 @@
 
 # OOP-Java Assignments
 ___
-___
-___
-___
-___
-___
-___
-___
 ## Lab: 01
 Q.1 Write a simple java program with command-line argument in java.
 ### Code:
@@ -25,10 +18,7 @@ public class Lab_01_Task {
 
 ```
 ### Output :
-### ``` Lab Manual by H-R-S ```
-___
-___
-___
+#### ``` Lab Manual by H-R-S ```
 ___
 
 
