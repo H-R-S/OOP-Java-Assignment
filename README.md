@@ -18,7 +18,7 @@ public class Lab_01_Task {
 
 ```
 ### Output :
-#### ``` Lab Manual by H-R-S ```
+``` Lab Manual by H-R-S ```
 ___
 
 
