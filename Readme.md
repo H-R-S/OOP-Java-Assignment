@@ -1047,8 +1047,6 @@ Faculty Details are:
 ```
 
 ___
-# Data Structure & Algorithm Manual/Assignment Solved
-___
 ## Lab_11
 Q. JavaFx Controlls
 ### Code:
