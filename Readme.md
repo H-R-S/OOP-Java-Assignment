@@ -1295,3 +1295,340 @@ public class PieChartExperiments extends Application {
     }
 }
 ```
+
+___
+## Lab_13
+Q. Login Screen
+### Code
+#### Login.java:
+```
+package application;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Reflection;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+ 
+
+public class Login extends Application {
+ 
+	String user = "admin";
+	String pw = "password";
+	String checkUser, checkPw;
+	
+    public static void main(String[] args) {
+        launch(args);
+    }
+     
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Login Form by H_R_S (Haris)");
+        
+        BorderPane bp = new BorderPane();
+        bp.setPadding(new Insets(10,50,50,50));
+        
+        //Adding HBox
+        HBox hb = new HBox();
+        hb.setPadding(new Insets(20,20,20,30));
+        
+        //Adding GridPane
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(20,20,20,20));
+        gridPane.setHgap(5);
+        gridPane.setVgap(5);
+        
+       //Implementing Nodes for GridPane
+        Label lblUserName = new Label("Username");
+        final TextField txtUserName = new TextField();
+        Label lblPassword = new Label("Password");
+        final PasswordField pf = new PasswordField();
+        Button btnLogin = new Button("Login");
+        final Label lblMessage = new Label();
+        
+        //Adding Nodes to GridPane layout
+        gridPane.add(lblUserName, 0, 0);
+        gridPane.add(txtUserName, 1, 0);
+        gridPane.add(lblPassword, 0, 1);
+        gridPane.add(pf, 1, 1);
+        gridPane.add(btnLogin, 2, 1);
+        gridPane.add(lblMessage, 1, 2);
+        
+        //Reflection for gridPane
+        Reflection r = new Reflection();
+        r.setFraction(0.7f);
+        gridPane.setEffect(r);
+        
+        //DropShadow effect 
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setOffsetX(5);
+        dropShadow.setOffsetY(5);
+        
+        //Adding text and DropShadow effect to it
+        Text text = new Text("Login Form");
+        text.setFont(Font.font ("Verdana", 30));
+        
+        //Adding text to HBox
+        hb.getChildren().add(text);
+                          
+        //Add ID's to Nodes
+        bp.setId("bp");
+        gridPane.setId("root");
+        btnLogin.setId("btnLogin");
+        text.setId("text");
+                
+        //Action for btnLogin
+        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+        	public void handle(ActionEvent event) {
+        		checkUser = txtUserName.getText().toString();
+        		checkPw = pf.getText().toString();
+        		if(checkUser.equals(user) && checkPw.equals(pw)){
+        			lblMessage.setText("Congratulations!");
+        			lblMessage.setTextFill(Color.GREEN);
+        		}
+        		else{
+        			lblMessage.setText("Incorrect user or password.");
+        			lblMessage.setTextFill(Color.RED);
+        		}
+        		txtUserName.setText("");
+        		pf.setText("");
+        	}
+        	});
+       
+        //Add HBox and GridPane layout to BorderPane Layout
+        bp.setTop(hb);
+        bp.setCenter(gridPane);  
+        
+        //Adding BorderPane to the scene and loading CSS
+    	Scene scene = new Scene(bp);
+    	primaryStage.setScene(scene);
+    	primaryStage.setResizable(false);
+    	primaryStage.show();
+    }
+}
+```
+Q. Next Screen
+### Code:
+#### NextPage.java:
+```
+package application;
+
+import java.time.LocalDate;
+
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+public class NextPage extends Application  {
+
+	Stage window;
+	Scene scene;
+	
+	public NextPage() {
+	
+		window= new Stage();
+		window.setTitle("Add User (H_R_S)");
+		window.setHeight(370);
+		window.setWidth(400);
+		window.setResizable(false);
+		
+		addcomponents();
+		
+		window.setScene(scene);
+		window.show();
+	
+	}
+	
+	private void addcomponents() {
+		//Text heading = new Text("Add User");
+		
+		Label name= new Label("Name");
+		TextField ntext= new TextField();
+		
+		Label email= new Label("Email");
+		TextField etext= new TextField();
+
+		Label gender= new Label("Gender");
+		ToggleGroup group= new ToggleGroup();
+		RadioButton rmale= new RadioButton("Male");
+		RadioButton rfemale= new RadioButton("Female");
+		rmale.setToggleGroup(group);
+		rfemale.setToggleGroup(group);
+		
+		Label edu= new Label("Education");
+		ObservableList<String> items= FXCollections.observableArrayList(
+				"Phd", "Master", "Graduate", "Intermediate", "Matric", "Secondary", "Primaray");
+
+		ListView<String> eduList= new ListView<String>(items);
+		eduList.setPrefHeight(40);
+		
+		
+		Label loc= new Label("Location");
+		ComboBox<String> locList= new ComboBox<String>();
+		locList.getItems().add("Karachi");
+		locList.getItems().add("Islamabad");
+		locList.getItems().add("Multan");
+		locList.getItems().add("Lahore");
+		locList.getItems().add("Peshawer");
+		locList.getItems().add("Other");
+		
+		Label dob= new Label("DOB");
+		DatePicker date= new DatePicker();
+		date.setValue(LocalDate.now());
+		
+		Button btnsignup= new Button("Add User");
+		Button btnclear= new Button("Clear");
+				
+		GridPane layout= new GridPane();
+		layout.setPadding(new Insets(20));
+		layout.setVgap(10);
+		layout.add(name, 0, 1);
+		layout.add(ntext, 1, 1);
+		layout.add(email, 0, 2);
+		layout.add(etext, 1, 2);
+		layout.add(gender, 0, 3);
+		layout.add(rmale, 1, 3);
+		layout.add(rfemale, 1, 3);
+		layout.setMargin(rfemale, new Insets(0, 0, 0 , 80));
+		
+		layout.add(edu, 0, 4);
+		layout.add(eduList, 1, 4);
+		layout.add(loc, 0, 5);
+		layout.add(locList, 1, 5);
+		layout.add(dob, 0, 6);
+		layout.add(date, 1, 6);
+		layout.add(btnsignup, 1, 7);
+		layout.add(btnclear, 1, 7);
+		layout.setMargin(btnclear, new Insets(0, 0, 0 , 80));
+	
+		
+		btnsignup.setOnAction(new EventHandler<ActionEvent>() {
+			
+			public void handle(ActionEvent arg0) {
+				Alert alert= new Alert(AlertType.INFORMATION);
+				alert.setHeaderText(null);
+				alert.setContentText("Added successfully!!");
+				alert.show();
+			}
+		});
+		
+		 scene= new Scene(layout);	
+	}
+
+	@Override
+	public void start(Stage arg0) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+}
+```
+Q. Menu Screen
+### Code:
+#### MenuTest.java:
+```
+package application;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+public class MenuTest extends Application {
+
+  @Override
+  public void start(Stage primaryStage) {
+    BorderPane root = new BorderPane();
+    Scene scene = new Scene(root, 300, 250, Color.WHITE);
+
+    MenuBar menuBar = new MenuBar();
+    menuBar.prefWidthProperty().bind(primaryStage.widthProperty());
+    root.setTop(menuBar);
+
+    // File menu - new, save, exit
+    Menu fileMenu = new Menu("File");
+    MenuItem newMenuItem = new MenuItem("New");
+    MenuItem saveMenuItem = new MenuItem("Save");
+    MenuItem exitMenuItem = new MenuItem("Exit");
+    exitMenuItem.setOnAction(actionEvent -> Platform.exit());
+
+    fileMenu.getItems().addAll(newMenuItem, saveMenuItem,
+        new SeparatorMenuItem(), exitMenuItem);
+
+    Menu webMenu = new Menu("Web");
+    CheckMenuItem htmlMenuItem = new CheckMenuItem("HTML");
+    htmlMenuItem.setSelected(true);
+    webMenu.getItems().add(htmlMenuItem);
+
+    CheckMenuItem cssMenuItem = new CheckMenuItem("CSS");
+    cssMenuItem.setSelected(true);
+    webMenu.getItems().add(cssMenuItem);
+
+    Menu sqlMenu = new Menu("SQL");
+    ToggleGroup tGroup = new ToggleGroup();
+    RadioMenuItem mysqlItem = new RadioMenuItem("MySQL");
+    mysqlItem.setToggleGroup(tGroup);
+
+    RadioMenuItem oracleItem = new RadioMenuItem("Oracle");
+    oracleItem.setToggleGroup(tGroup);
+    oracleItem.setSelected(true);
+
+    sqlMenu.getItems().addAll(mysqlItem, oracleItem,
+        new SeparatorMenuItem());
+
+    Menu tutorialManeu = new Menu("Tutorial");
+    tutorialManeu.getItems().addAll(
+        new CheckMenuItem("Java"),
+        new CheckMenuItem("JavaFX"),
+        new CheckMenuItem("Swing"));
+
+    sqlMenu.getItems().add(tutorialManeu);
+
+    menuBar.getMenus().addAll(fileMenu, webMenu, sqlMenu);
+
+    primaryStage.setScene(scene);
+    primaryStage.show();
+  }
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+```
